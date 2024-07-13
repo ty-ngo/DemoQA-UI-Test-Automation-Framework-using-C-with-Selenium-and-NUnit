@@ -1,0 +1,14 @@
+{
+  "firstName": "Ty",
+  "lastName": "Ngo",
+  "email": "tyngo@example.com",
+  "gender": "Male",
+  "mobileNumber": "0123456789",
+  "dateOfBirth": "10 April 2001",
+  "subjects": [ "Maths", "Accounting" ],
+  "hobbies": [ "Sports", "Music" ],
+  "picturePath": "\\TestData\\Image\\hello_brown_05(trans)-boring.png",
+  "currentAddress": "Tan Binh District, HCMC",
+  "state": "Haryana",
+  "city": "Karnal"
+}
