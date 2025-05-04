@@ -22,7 +22,7 @@ namespace final.Test
         }
 
         [Test, Description("Scan Accessibility for Registration Form (partial page) and Form Page (full page)")]
-        public void TC_ScanAccessibilityForRegistrationPageAndRegistrationForm()
+        public void TC_ScanAccessibilityForRegistrationFormAndFormPage()
         {
             ExtentReportHelper.LogTestStep("1. Go to Form Page");
             DriverHelper.GoToUrl(FORM_URL);
@@ -41,7 +41,7 @@ namespace final.Test
         }
 
         [Test, Description("Scan Accessibility for Book Store Page with default options")]
-        public void TC_ScanAccessibilityForBookStorePage()
+        public void TC_ScanAccessibilityForBookStorePageWithDefaultOptions()
         {
             ExtentReportHelper.LogTestStep("1. Go to Book Store Page");
             DriverHelper.GoToUrl(BOOKSTORE_URL);
@@ -54,7 +54,7 @@ namespace final.Test
         }
 
         [Test, Description("Scan Accessibility for Login Page and Profile Page with custom options")]
-        public void TC_ScanAccessibilityForLoginPage()
+        public void TC_ScanAccessibilityForLoginPageAndProfilePageWithCustomOptions()
         {
             ExtentReportHelper.LogTestStep("0. Define the scan options for Axe");
             var options = new AxeRunOptions
