@@ -17,6 +17,7 @@ namespace final.Page
             _txtUsername.Enter(username);
             _txtPassword.Enter(password);
             _btnLogin.ClickByJS();
+            Assert.That(CheckLoggedIn(), Is.True, "Login failed.");
         }
     }
 }

@@ -2,7 +2,6 @@
 using final.Core;
 using final.Models;
 using OpenQA.Selenium;
-using System.IO.Enumeration;
 
 namespace final.Page
 {
@@ -10,24 +9,26 @@ namespace final.Page
     {
         public FormPage() { }
 
-        public Element _txtFirstName = new Element(By.Id("firstName"));
-        public Element _txtLastName = new Element(By.Id("lastName"));
-        public Element _txtEmail = new Element(By.Id("userEmail"));
-        public Element _lblGender(string gender) { return new Element(By.XPath($"//label[text()='{gender}']")); }
-        public Element _txtMobile = new Element(By.Id("userNumber"));
-        public Element _txtDateOfBirth = new Element(By.Id("dateOfBirthInput"));
-        public Element _rdoYear = new Element(By.XPath("//select[contains(@class,'year-select')]"));
-        public Element _rdoMonth = new Element(By.XPath("//select[contains(@class,'month-select')]"));
-        public Element _btnDay(string targetDay) { return new Element(By.XPath($"//div[text()='{targetDay}' and not(contains(@class,'outside-month'))]")); }
-        public Element _txtSubject = new Element(By.Id("subjectsInput"));
-        public Element _inpPicture = new Element(By.Id("uploadPicture"));
-        public Element _txaCurrentAddress = new Element(By.Id("currentAddress"));
-        public Element _cboState = new Element(By.CssSelector("#state input"));
-        public Element _cboCity = new Element(By.CssSelector("#city input"));
-        public Element _btnSubmit = new Element(By.Id("submit"));
-        public Element _lblThankYouMessage = new Element(By.XPath("//div[contains(@class,'modal-title')]"));
+        private Element _formStudentRegistration = new Element(By.Id("userForm"));
 
-        public IList<Element> _lblHobbyOptions(string[] hobbies)
+        private Element _txtFirstName = new Element(By.Id("firstName"));
+        private Element _txtLastName = new Element(By.Id("lastName"));
+        private Element _txtEmail = new Element(By.Id("userEmail"));
+        private Element _lblGender(string gender) { return new Element(By.XPath($"//label[text()='{gender}']")); }
+        private Element _txtMobile = new Element(By.Id("userNumber"));
+        private Element _txtDateOfBirth = new Element(By.Id("dateOfBirthInput"));
+        private Element _rdoYear = new Element(By.XPath("//select[contains(@class,'year-select')]"));
+        private Element _rdoMonth = new Element(By.XPath("//select[contains(@class,'month-select')]"));
+        private Element _btnDay(string targetDay) { return new Element(By.XPath($"//div[text()='{targetDay}' and not(contains(@class,'outside-month'))]")); }
+        private Element _txtSubject = new Element(By.Id("subjectsInput"));
+        private Element _inpPicture = new Element(By.Id("uploadPicture"));
+        private Element _txaCurrentAddress = new Element(By.Id("currentAddress"));
+        private Element _cboState = new Element(By.CssSelector("#state input"));
+        private Element _cboCity = new Element(By.CssSelector("#city input"));
+        private Element _btnSubmit = new Element(By.Id("submit"));
+        private Element _lblThankYouMessage = new Element(By.XPath("//div[contains(@class,'modal-title')]"));
+
+        private IList<Element> _lblHobbyOptions(string[] hobbies)
         {
             List<Element> hobbiesElementsList = new List<Element>();
             foreach (string hobby in hobbies)
@@ -37,7 +38,7 @@ namespace final.Page
             return hobbiesElementsList;
         }
 
-        public Element _lblResultInfo(string fieldName)
+        private Element _lblResultInfo(string fieldName)
         {
             return new Element(By.XPath($"//td[text()='{fieldName}']/following-sibling::td"));
         }
@@ -317,6 +318,11 @@ namespace final.Page
                     checkPictureResult(student.picturePath) &&
                     checkAddressResult(student.currentAddress) &&
                     checkStateCityResult(student.state, student.city));
+        }
+
+        public Element getRegistrationForm()
+        {
+            return _formStudentRegistration;
         }
     }
 }

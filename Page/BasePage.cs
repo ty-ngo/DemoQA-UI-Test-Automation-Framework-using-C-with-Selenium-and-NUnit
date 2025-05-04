@@ -15,7 +15,7 @@ namespace final.Page
             _txtSearchBox.Enter(searchValue);
         }
 
-        public bool CheckLogedIn()
+        public bool CheckLoggedIn()
         {
             if (_btnLogOut.WaitForElementToBeVisible() != null)
             {
