@@ -1,5 +1,4 @@
 ﻿using Deque.AxeCore.Commons;
-using Deque.AxeCore.Selenium;
 using final.Core.Helper;
 using final.Page;
 
@@ -7,17 +6,13 @@ namespace final.Test
 {
     public class AccessibilityTest : BaseTest
     {
-        private BookStorePage _bookStorePage;
         private LoginPage _loginPage;
-        private ProfilePage _profilePage;
         private FormPage _formPage;
 
         [SetUp]
         public void PageSetup()
         {
-            _bookStorePage = new BookStorePage();
             _loginPage = new LoginPage();
-            _profilePage = new ProfilePage();
             _formPage = new FormPage();
         }
 
@@ -28,13 +23,13 @@ namespace final.Test
             DriverHelper.GoToUrl(FORM_URL);
 
             ExtentReportHelper.LogTestStep("2. Scan Accessibility for the Registration Form");
-            AxeResult formAccessibilityResult = DriverHelper.ScanElementAccessibility(_formPage.getRegistrationForm(), "RegistrationForm");
+            AxeResult formAccessibilityResult = AxeHelper.ScanElementAccessibility(_formPage.getRegistrationForm(), "RegistrationForm");
 
             ExtentReportHelper.LogTestStep("3. Verify that the Registration Form has no accessibility violation");
             Assert.That(formAccessibilityResult.Violations.Count, Is.EqualTo(0), "Accessibility violations found, for more detail please see the HTML report file.");
 
             ExtentReportHelper.LogTestStep("4. Scan Accessibility for the whole Form Page");
-            AxeResult pageAccessibilityResult = DriverHelper.ScanPageAccessibility("FormPage");
+            AxeResult pageAccessibilityResult = AxeHelper.ScanPageAccessibility("FormPage");
 
             ExtentReportHelper.LogTestStep("5. Verify that the Form Page has no accessibility violation");
             Assert.That(pageAccessibilityResult.Violations.Count, Is.EqualTo(0), "Accessibility violations found, for more detail please see the HTML report file.");
@@ -47,7 +42,7 @@ namespace final.Test
             DriverHelper.GoToUrl(BOOKSTORE_URL);
 
             ExtentReportHelper.LogTestStep("2. Scan Accessibility for the whole Book Store Page");
-            AxeResult pageAccessibilityResult = DriverHelper.ScanPageAccessibility("BookStorePage");
+            AxeResult pageAccessibilityResult = AxeHelper.ScanPageAccessibility("BookStorePage");
 
             ExtentReportHelper.LogTestStep("3. Verify that the Book Store Page has no accessibility violation");
             Assert.That(pageAccessibilityResult.Violations.Count, Is.EqualTo(0), "Accessibility violations found, for more detail please see the HTML report file.");
@@ -76,7 +71,7 @@ namespace final.Test
             DriverHelper.GoToUrl(LOGIN_URL);
 
             ExtentReportHelper.LogTestStep("2. Scan Accessibility for the whole Login Page");
-            AxeResult loginPageAccessibilityResult = DriverHelper.ScanPageAccessibility("LoginPage", options);
+            AxeResult loginPageAccessibilityResult = AxeHelper.ScanPageAccessibility("LoginPage", options);
 
             ExtentReportHelper.LogTestStep("3. Verify that the Login Page has no accessibility violation");
             Assert.That(loginPageAccessibilityResult.Violations.Count, Is.EqualTo(0), "Accessibility violations found, for more detail please see the HTML report file.");
@@ -85,7 +80,7 @@ namespace final.Test
             _loginPage.login(Constant.USERNAME, Constant.PASSWORD);
 
             ExtentReportHelper.LogTestStep("5. Scan Accessibility for the whole Profile Page");
-            AxeResult profilePageAccessibilityResult = DriverHelper.ScanPageAccessibility("ProfilePage", options);
+            AxeResult profilePageAccessibilityResult = AxeHelper.ScanPageAccessibility("ProfilePage", options);
 
             ExtentReportHelper.LogTestStep("6. Verify that the Profile Page has no accessibility violation");
             Assert.That(profilePageAccessibilityResult.Violations.Count, Is.EqualTo(0), "Accessibility violations found, for more detail please see the HTML report file.");
