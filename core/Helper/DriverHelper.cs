@@ -22,10 +22,14 @@ namespace final.Core.Helper
             alert.Accept();
         }
 
-        public static AxeResult ScanPageAccessibility(string pageName)
+        public static AxeResult ScanPageAccessibility(string pageName, AxeRunOptions options = null)
         {
             AxeBuilder axeBuilder = new AxeBuilder(DriverManager.WebDriver);
-            AxeResult axeResult = axeBuilder.WithTags("wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag21aa").Analyze();
+            if (options != null)
+            {
+                axeBuilder.WithOptions(options);
+            }
+            AxeResult axeResult = axeBuilder.Analyze();
 
             string resultFolderPath = Directory.GetCurrentDirectory() + "\\..\\..\\..\\TestResult";
             if (!Directory.Exists(resultFolderPath))
@@ -38,10 +42,14 @@ namespace final.Core.Helper
             return axeResult;
         }
 
-        public static AxeResult ScanElementAccessibility(Element element, string elementName)
+        public static AxeResult ScanElementAccessibility(Element element, string elementName, AxeRunOptions options = null)
         {
             AxeBuilder axeBuilder = new AxeBuilder(DriverManager.WebDriver);
-            AxeResult axeResult = axeBuilder.WithTags("wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag21aa").Analyze(element.WaitForElementToBeVisible());
+            if (options != null)
+            {
+                axeBuilder.WithOptions(options);
+            }
+            AxeResult axeResult = axeBuilder.Analyze(element.WaitForElementToBeVisible());
 
             string resultFolderPath = Directory.GetCurrentDirectory() + "\\..\\..\\..\\TestResult";
             if (!Directory.Exists(resultFolderPath))

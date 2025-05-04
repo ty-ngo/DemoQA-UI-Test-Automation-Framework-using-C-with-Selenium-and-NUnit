@@ -1,4 +1,5 @@
 ﻿using Deque.AxeCore.Commons;
+using Deque.AxeCore.Selenium;
 using final.Core.Helper;
 using final.Page;
 
@@ -20,7 +21,7 @@ namespace final.Test
             _formPage = new FormPage();
         }
 
-        [Test, Description("Scan Accessibility for Form Page and Registration Form")]
+        [Test, Description("Scan Accessibility for Registration Form (partial page) and Form Page (full page)")]
         public void TC_ScanAccessibilityForRegistrationPageAndRegistrationForm()
         {
             ExtentReportHelper.LogTestStep("1. Go to Form Page");
@@ -39,7 +40,7 @@ namespace final.Test
             Assert.That(pageAccessibilityResult.Violations.Count, Is.EqualTo(0), "Accessibility violations found, for more detail please see the HTML report file.");
         }
 
-        [Test, Description("Scan Accessibility for Book Store Page")]
+        [Test, Description("Scan Accessibility for Book Store Page with default options")]
         public void TC_ScanAccessibilityForBookStorePage()
         {
             ExtentReportHelper.LogTestStep("1. Go to Book Store Page");
@@ -52,14 +53,30 @@ namespace final.Test
             Assert.That(pageAccessibilityResult.Violations.Count, Is.EqualTo(0), "Accessibility violations found, for more detail please see the HTML report file.");
         }
 
-        [Test, Description("Scan Accessibility for Login Page and Profile Page")]
+        [Test, Description("Scan Accessibility for Login Page and Profile Page with custom options")]
         public void TC_ScanAccessibilityForLoginPage()
         {
+            ExtentReportHelper.LogTestStep("0. Define the scan options for Axe");
+            var options = new AxeRunOptions
+            {
+                RunOnly = new RunOnlyOptions
+                {
+                    Type = "tag",
+                    Values = new List<string> { "wcag2aa", "wcag21aa" }
+                },
+                ResultTypes = new HashSet<ResultType> { ResultType.Violations, ResultType.Incomplete },
+                Rules = new Dictionary<string, RuleOptions>
+                {
+                    ["color-contrast"] = new RuleOptions { Enabled = false },
+                    ["image-alt"] = new RuleOptions { Enabled = true }
+                },
+            };
+
             ExtentReportHelper.LogTestStep("1. Go to Login Page");
             DriverHelper.GoToUrl(LOGIN_URL);
 
             ExtentReportHelper.LogTestStep("2. Scan Accessibility for the whole Login Page");
-            AxeResult loginPageAccessibilityResult = DriverHelper.ScanPageAccessibility("LoginPage");
+            AxeResult loginPageAccessibilityResult = DriverHelper.ScanPageAccessibility("LoginPage", options);
 
             ExtentReportHelper.LogTestStep("3. Verify that the Login Page has no accessibility violation");
             Assert.That(loginPageAccessibilityResult.Violations.Count, Is.EqualTo(0), "Accessibility violations found, for more detail please see the HTML report file.");
@@ -68,7 +85,7 @@ namespace final.Test
             _loginPage.login(Constant.USERNAME, Constant.PASSWORD);
 
             ExtentReportHelper.LogTestStep("5. Scan Accessibility for the whole Profile Page");
-            AxeResult profilePageAccessibilityResult = DriverHelper.ScanPageAccessibility("ProfilePage");
+            AxeResult profilePageAccessibilityResult = DriverHelper.ScanPageAccessibility("ProfilePage", options);
 
             ExtentReportHelper.LogTestStep("6. Verify that the Profile Page has no accessibility violation");
             Assert.That(profilePageAccessibilityResult.Violations.Count, Is.EqualTo(0), "Accessibility violations found, for more detail please see the HTML report file.");
